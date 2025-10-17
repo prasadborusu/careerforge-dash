@@ -212,20 +212,13 @@ const Courses = () => {
                 </div>
               </CardContent>
               <CardFooter>
-                {enrolledCourses.has(course.id) ? (
-                  <Button className="w-full gradient-primary" disabled>
-                    <Play className="mr-2 h-4 w-4" />
-                    Enrolled
-                  </Button>
-                ) : (
-                  <Button 
-                    className="w-full gradient-primary" 
-                    onClick={() => handleEnroll(course.id)}
-                  >
-                    <TrendingUp className="mr-2 h-4 w-4" />
-                    Enroll Now
-                  </Button>
-                )}
+                <Button 
+                  className="w-full gradient-primary" 
+                  onClick={() => navigate(`/courses/${course.id}`)}
+                >
+                  <BookOpen className="mr-2 h-4 w-4" />
+                  View Course
+                </Button>
               </CardFooter>
             </Card>
           ))}

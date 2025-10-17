@@ -21,6 +21,7 @@ interface NavbarProps {
 const Navbar = ({ user }: NavbarProps) => {
   const navigate = useNavigate();
   const [profile, setProfile] = useState<any>(null);
+  const [userRole, setUserRole] = useState<string | null>(null);
 
   useEffect(() => {
     if (user) {
@@ -35,6 +36,13 @@ const Navbar = ({ user }: NavbarProps) => {
       .eq("id", user.id)
       .single();
     setProfile(data);
+
+    const { data: roleData } = await supabase
+      .from("user_roles")
+      .select("role")
+      .eq("user_id", user.id)
+      .single();
+    setUserRole(roleData?.role || null);
   };
 
   const handleSignOut = async () => {
@@ -68,6 +76,16 @@ const Navbar = ({ user }: NavbarProps) => {
               <Link to="/internships">
                 <Button variant="ghost">Internships</Button>
               </Link>
+              {userRole === "educator" && (
+                <Link to="/manage-courses">
+                  <Button variant="ghost">Manage Courses</Button>
+                </Link>
+              )}
+              {userRole === "recruiter" && (
+                <Link to="/manage-events">
+                  <Button variant="ghost">Manage Events</Button>
+                </Link>
+              )}
 
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
